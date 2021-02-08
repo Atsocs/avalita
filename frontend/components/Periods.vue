@@ -10,14 +10,11 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content v-for="(subItem, i) in item" :key="i"
         class="text-center">
-          <!--          {{subItem}}<br>-->
-          <!--          {{subItem.professor.name}}-->
           {{subItem.professor.name}}<br>
           ({{subItem.course_abbr}} - {{subItem.course_name}})
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    {{names}}
   </div>
 </template>
 
