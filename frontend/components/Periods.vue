@@ -2,25 +2,33 @@
   <div>
     <v-expansion-panels>
       <v-expansion-panel
-        v-for="(item,name) in groupedItems(items)"
-        :key="name"
+        v-for="(item,period) in groupedItems(items)"
+        :key="period"
       >
         <v-expansion-panel-header>
-          {{name}}
+          {{period}}
         </v-expansion-panel-header>
-        <v-expansion-panel-content
-          v-for="(subItem, i) in item"
-          :key="i"
-          class="text-center"
-        >
-          {{subItem.professor.name}}<br>
-          ({{subItem.course_abbr}} - {{subItem.course_name}})
-          <v-rating
-            hover
-            length="5"
-            size="64"
-            value="3"
-          />
+        <v-expansion-panel-content>
+          <v-expansion-panels>
+            <v-expansion-panel
+              v-for="(subItem, i) in item"
+              :key="i"
+            >
+              <v-expansion-panel-header>
+                <div>
+                  <span class="title">
+                    {{subItem.professor.name}}
+                  </span>
+                  <span class="body-2">
+                    {{subItem.course_abbr}} | {{subItem.course_name}}
+                  </span>
+                </div>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <course />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -29,18 +37,19 @@
 
 <script>
 import _ from 'lodash'
+import Course from './Course'
 
 export default {
   name: 'Periods',
+  components: {Course},
   props: ['items'],
   data () {
     return {}
   },
   methods: {
     groupedItems (x) {
-      //
       return _.mapValues(_.groupBy(x, 'period'),
-        clist => clist.map(x => _.omit(x, 'period')))
+        c_list => c_list.map(x => _.omit(x, 'period')))
     }
   }
 }
