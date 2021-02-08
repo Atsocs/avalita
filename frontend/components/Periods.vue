@@ -16,9 +16,6 @@
           {{subItem.professor.name}}<br>
           ({{subItem.course_abbr}} - {{subItem.course_name}})
           <v-rating
-            empty-icon="$mdiStarOutline"
-            full-icon="$mdiStar"
-            half-icon="$mdiStarHalfFull"
             hover
             length="5"
             size="64"
