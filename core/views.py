@@ -58,6 +58,10 @@ def list_todos(request):
     todos = todo_svc.list_todos()
     return JsonResponse({'todos': todos})
 
+@ajax_login_required
+def list_items(request):
+    items = todo_svc.list_items()
+    return JsonResponse({'items': items})
 
 def _user2dict(user):
     d = {
