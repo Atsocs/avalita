@@ -6,8 +6,8 @@
           {{question}}
         </v-list-item-title>
         <v-list-item-content class="body-2">
-          Seu voto: {{rating}} - {{rating_text[rating - 1]}}<br>
-          Pontuação: {{score_formatter(score)}} ({{votes_formatter(votes)}} votos)
+          Pontuação: {{score}}<br>
+          Seu voto: {{rating}} - {{rating_text[rating - 1]}}
         </v-list-item-content>
       </v-list-item-content>
     </v-list-item>
@@ -25,21 +25,10 @@
 <script>
 export default {
   name: 'Rating',
-  props: ['score', 'votes', 'question'],
+  props: ['score', 'question', 'rating'],
   data () {
     return {
-      rating: 3,
       rating_text: ['De jeito nenhum', 'Não muito', 'Mais ou menos', 'Razoavalmente', 'Muito']
-    }
-  },
-  methods: {
-    score_formatter (n) {
-      return (new Intl.NumberFormat('pt-Br',
-        {maximumFractionDigits: 2, minimumFractionDigits: 2})).format(parseFloat(n))
-    },
-
-    votes_formatter (n) {
-      return (new Intl.NumberFormat('pt-Br')).format(parseInt(n))
     }
   }
 }
