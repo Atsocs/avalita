@@ -21,7 +21,7 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <course :items="items" :item="subItem" />
+              <course-ratings :items="items" :item="subItem" />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -32,11 +32,11 @@
 
 <script>
 import _ from 'lodash'
-import Course from './Course'
+import CourseRatings from './CourseRatings'
 
 export default {
-  name: 'Periods',
-  components: {Course},
+  name: 'OuterExpansionPanel',
+  components: {CourseRatings},
   props: ['items'],
   data () {
     return {}

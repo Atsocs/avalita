@@ -1,17 +1,18 @@
 <template>
   <div>
-<!--    <pre>-->
+    <outer-expansion-panel :items="items" />
+    <span class="title">items</span>
+    <pre>
       {{items}}
-<!--    </pre>-->
-    <periods :items="items" />
+    </pre>
   </div>
 </template>
 
 <script>
-import Periods from '../components/Periods'
+import OuterExpansionPanel from '../components/OuterExpansionPanel'
 
 export default {
-  components: {Periods},
+  components: {OuterExpansionPanel},
   data () {
     return {
       items: [

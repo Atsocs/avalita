@@ -20,7 +20,7 @@
 import Rating from './Rating'
 
 export default {
-  name: 'Course',
+  name: 'CourseRatings',
   components: {Rating},
   props: ['items', 'item'],
   data () {
