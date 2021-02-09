@@ -1,30 +1,36 @@
 <template>
-  <v-row no-gutters>
-    <template v-for="(info, n) in getCourseInfo(item)">
-      <v-col :key="n" class="ma-1">
-        <rating
-          :question="info.title"
-          :score="info.score" :votes="info.votes" :rating="info.rating" class="text-left"
+  <div>
+    <v-progress-linear indeterminate v-if="loading" />
+    <v-row no-gutters v-else>
+      <template v-for="(info, n) in getCourseInfo(item)">
+        <v-col :key="n" class="ma-1">
+          <rating
+            :question="info.title"
+            :score="info.score" :votes="info.votes" :rating="info.rating" class="text-left"
+          />
+        </v-col>
+        <v-responsive
+          v-if="(n + 1) % 2 === 0"
+          :key="`width-${n}`"
+          width="100%"
         />
-      </v-col>
-      <v-responsive
-        v-if="(n + 1) % 2 === 0"
-        :key="`width-${n}`"
-        width="100%"
-      />
-    </template>
-  </v-row>
+      </template>
+    </v-row>
+  </div>
 </template>
 
 <script>
 import Rating from './Rating'
+import api from '~api'
 
 export default {
   name: 'CourseRatings',
   components: {Rating},
-  props: ['items', 'item'],
+  props: ['item'],
+  items: [],
   data () {
     return {
+      loading: true,
       titles: [
         'Gostaria de fazer outra disciplina com este(a) professor(a)?',
         'O(A) professor(a) foi coerente?',
@@ -32,6 +38,12 @@ export default {
         'Foi fácil passar nesta Disciplina?'
       ]
     }
+  },
+  async mounted () {
+    this.loading = true
+    const response = await api.list_items()
+    this.items = response.items
+    this.loading = false
   },
   methods: {
     getCourseInfo (item) {
