@@ -1,21 +1,19 @@
 <template>
-  <v-container class="grey lighten-5">
-    <v-row no-gutters>
-      <template v-for="(q, n) in questions">
-        <v-col :key="n">
-          <rating
-            :question="q"
-            :score="3.2" :votes="122" class="text-left"
-          />
-        </v-col>
-        <v-responsive
-          v-if="(n + 1) % 2 === 0"
-          :key="`width-${n}`"
-          width="100%"
+  <v-row no-gutters>
+    <template v-for="(q, n) in questions">
+      <v-col :key="n" class="ma-1">
+        <rating
+          :question="q"
+          :score="3.2" :votes="122" class="text-left"
         />
-      </template>
-    </v-row>
-  </v-container>
+      </v-col>
+      <v-responsive
+        v-if="(n + 1) % 2 === 0"
+        :key="`width-${n}`"
+        width="100%"
+      />
+    </template>
+  </v-row>
 </template>
 
 <script>

@@ -5,7 +5,7 @@
         v-for="(item,period) in groupedItems(items)"
         :key="period"
       >
-        <v-expansion-panel-header>
+        <v-expansion-panel-header class="subtitle-1">
           {{period}}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -16,12 +16,8 @@
             >
               <v-expansion-panel-header>
                 <div>
-                  <span class="title">
-                    {{subItem.professor.name}}
-                  </span>
-                  <span class="body-2">
-                    {{subItem.course_abbr}} | {{subItem.course_name}}
-                  </span>
+                  <span class="subtitle-2">{{subItem.professor.name}}</span> |
+                  <span class="body-2">{{subItem.course_abbr}} | {{subItem.course_name}}</span>
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>

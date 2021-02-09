@@ -2,10 +2,10 @@
   <v-card class="mx-auto" outlined>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title>
+        <v-list-item-title class="body-2">
           {{question}}
         </v-list-item-title>
-        <v-list-item-content>
+        <v-list-item-content class="body-2">
           Seu voto: {{rating}} - {{rating_text[rating - 1]}}<br>
           Pontuação: {{score_formatter(score)}} ({{votes_formatter(votes)}} votos)
         </v-list-item-content>
