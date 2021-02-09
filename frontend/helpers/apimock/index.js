@@ -1,5 +1,6 @@
 import { zuck } from './db_people'
 import { todos } from './db_todos'
+import { items } from './db_items'
 import { mockasync } from './mockutils'
 
 const keepLoggedIn = true
@@ -29,5 +30,8 @@ export default {
   },
   add_todo (newtask) {
     return mockasync({description: newtask, done: false})
+  },
+  list_items () {
+    return mockasync(items)
   }
 }

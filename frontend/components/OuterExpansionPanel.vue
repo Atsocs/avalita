@@ -21,7 +21,8 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <router-link class="body-2"
+              <router-link
+                class="body-2"
                 text
                 :to="{ name: 'p', params: { username: subItem.professor.username }}"
               >
