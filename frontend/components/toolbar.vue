@@ -1,12 +1,11 @@
 <template>
   <v-app-bar color="blue-grey" dark fixed app clipped-right>
     <v-toolbar-title>AVALITA</v-toolbar-title>
-    <span class="px-2"/>
+    <span class="px-2" />
     <v-btn :to="{name: 'index'}">HOME</v-btn>
     <v-spacer />
     <v-btn v-if="!logged_user" text dark ripple class="ma-0 ml-5" @click="open_login_dialog($event)">Login</v-btn>
 
-    <!-- <template v-slot:activator="{ on }"><v-btn v-on="on"> -->
     <v-menu v-if="logged_user" offset-y>
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on" class="ma-0 ml-5">
