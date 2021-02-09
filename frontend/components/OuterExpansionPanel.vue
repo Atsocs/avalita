@@ -10,6 +10,7 @@
       <v-expansion-panel-content>
         <v-expansion-panels>
           <v-expansion-panel
+            v-if="subItem.student.username === student.username"
             v-for="(subItem, i) in item"
             :key="i"
           >
@@ -37,7 +38,7 @@ import CourseRatings from './CourseRatings'
 export default {
   name: 'OuterExpansionPanel',
   components: {CourseRatings},
-  props: ['items'],
+  props: ['items', 'student'],
   data () {
     return {}
   },

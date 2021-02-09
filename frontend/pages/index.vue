@@ -1,6 +1,7 @@
 <template>
   <div>
-    <outer-expansion-panel :items="items" />
+    user: {{user.username}}
+    <outer-expansion-panel :student="user" :items="items" />
     <span class="title">items</span>
     <pre>
       {{items}}
@@ -19,7 +20,7 @@ export default {
         {
           class_id: 0,
           period: '2020 - 1° semestre',
-          student: {name: 'Alberto'},
+          student: {username: 'alberto', name: 'Alberto'},
           professor: {username: 'bsilva', name: 'Beltrano Silva'},
           course_abbr: 'ART-01',
           course_name: 'Introdução à Carteação',
@@ -28,7 +29,7 @@ export default {
         {
           class_id: 2,
           period: '2020 - 1° semestre',
-          student: {name: 'Bianca'},
+          student: {username: 'bianca', name: 'Bianca'},
           professor: {username: 'csilva', name: 'Ciclano Silva'},
           course_abbr: 'MAC-01',
           course_name: 'Introdução ao Macaco',
@@ -37,7 +38,7 @@ export default {
         {
           class_id: 2,
           period: '2020 - 1° semestre',
-          student: {name: 'Camila'},
+          student: {username: 'camila', name: 'Camila'},
           professor: {username: 'csilva', name: 'Ciclano Silva'},
           course_abbr: 'MAC-01',
           course_name: 'Introdução ao Macaco',
@@ -46,7 +47,7 @@ export default {
         {
           class_id: 2,
           period: '2020 - 1° semestre',
-          student: {name: 'Dudu'},
+          student: {username: 'dudu', name: 'Dudu'},
           professor: {username: 'csilva', name: 'Ciclano Silva'},
           course_abbr: 'MAC-01',
           course_name: 'Introdução ao Macaco',
@@ -55,7 +56,7 @@ export default {
         {
           class_id: 2,
           period: '2020 - 1° semestre',
-          student: {name: 'Elane'},
+          student: {username: 'elane', name: 'Elane'},
           professor: {username: 'csilva', name: 'Ciclano Silva'},
           course_abbr: 'MAC-01',
           course_name: 'Introdução ao Macaco',
@@ -64,14 +65,26 @@ export default {
         {
           class_id: 1,
           period: '2020 - 2° semestre',
-          student: {name: 'Fernando'},
+          student: {username: 'fernando', name: 'Fernando'},
           professor: {username: 'fsilva', name: 'Fulano Silva'},
           course_abbr: 'ART-02',
           course_name: 'Introdução à Carteação 2',
           ratings: [3, 1, 2, null]
+        },
+        {
+          class_id: 1,
+          period: '2020 - 2° semestre',
+          student: {username: 'alberto', name: 'Alberto'},
+          professor: {username: 'bsilva', name: 'Beltrano Silva'},
+          course_abbr: 'ART-02',
+          course_name: 'Introdução à Carteação 2',
+          ratings: [3, 2, null, null]
         }
       ]
     }
+  },
+  computed: {
+    user () { return this.items[0].student }
   }
 }
 </script>
