@@ -1,8 +1,8 @@
 <template>
   <v-footer color="blue-grey" class="white--text" app>
-    <span>Vuetify</span>
+    <span>por Caio Costa</span>
     <v-spacer />
-    <span>&copy; 2017</span>
+    <span>&copy; 2021</span>
   </v-footer>
 </template>
 
