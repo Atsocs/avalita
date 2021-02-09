@@ -40,19 +40,29 @@
 <script>
 import _ from 'lodash'
 import CourseRatings from './CourseRatings'
+import api from '~api'
 
 export default {
   name: 'OuterExpansionPanel',
   components: {CourseRatings},
-  props: ['items', 'student'],
+  props: ['student'],
   data () {
-    return {}
+    return {
+      loading: true,
+      items: []
+    }
   },
   computed: {
     groupedItems () {
       return _.mapValues(_.groupBy(this.items, 'period'),
         c_list => c_list.map(x => _.omit(x, 'period')))
     }
+  },
+  async mounted () {
+    this.loading = true
+    const response = await api.list_items()
+    this.items = response.items
+    this.loading = false
   }
 }
 </script>

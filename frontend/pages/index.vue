@@ -1,32 +1,19 @@
 <template>
-  <div v-show="!loading">
+  <div>
     user: {{user.username}}
-    <outer-expansion-panel :student="user" :items="items" />
-    <span class="title">items</span>
-    <pre>
-      {{items}}
-    </pre>
+    <outer-expansion-panel :student="user" />
   </div>
 </template>
 
 <script>
-  import OuterExpansionPanel from '../components/OuterExpansionPanel'
-  import api from '~api'
+import OuterExpansionPanel from '../components/OuterExpansionPanel'
 
-  export default {
+export default {
   components: {OuterExpansionPanel},
   data () {
     return {
-      loading: true,
-      items: [],
-      user: {username: 'alberto', name: 'Alberto'}
+      user: {username: 'alberto', name: 'Alberto'} // todo: remove-me
     }
-  },
-  async mounted () {
-    this.loading = true
-    const response = await api.list_items()
-    this.items = response.items
-    this.loading = false
   }
 }
 </script>
