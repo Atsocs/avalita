@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import OuterExpansionPanel from '../components/OuterExpansionPanel'
-import api from '~api'
+  import OuterExpansionPanel from '../components/OuterExpansionPanel'
+  import api from '~api'
 
-export default {
+  export default {
   components: {OuterExpansionPanel},
   data () {
     return {
@@ -25,8 +25,7 @@ export default {
   async mounted () {
     this.loading = true
     const response = await api.list_items()
-    const todos = response.items
-    this.items = todos
+    this.items = response.items
     this.loading = false
   }
 }
