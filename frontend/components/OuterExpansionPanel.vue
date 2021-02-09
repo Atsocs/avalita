@@ -16,12 +16,17 @@
           >
             <v-expansion-panel-header>
               <div>
-                <span class="subtitle-2">{{subItem.professor.name}}</span> |
                 <span class="body-2">{{subItem.course_abbr}} | {{subItem.course_name}}</span> |
                 <span class="outline">{{subItem.student.name}}</span>
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
+              <router-link class="body-2"
+                text
+                :to="{ name: 'p', params: { username: subItem.professor.username }}"
+              >
+                {{subItem.professor.name}}
+              </router-link>
               <course-ratings :items="items" :item="subItem" />
             </v-expansion-panel-content>
           </v-expansion-panel>
