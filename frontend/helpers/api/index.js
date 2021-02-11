@@ -1,3 +1,4 @@
+import {mockasync} from '../apimock/mockutils'
 import {get, post} from './ajaxutils'
 
 export default {
@@ -16,10 +17,13 @@ export default {
   list_todos () {
     return get('/api/list_todos')
   },
-  add_todo (newtask) {
-    return post('/api/add_todo', {new_task: newtask})
+  add_todo (new_task) {
+    return post('/api/add_todo', {new_task})
   },
   list_items () {
     return get('/api/list_items')
+  },
+  vote (classId, col, value, studentUsername) {
+    return post('/api/vote', {classId, col, value, studentUsername})
   }
 }
