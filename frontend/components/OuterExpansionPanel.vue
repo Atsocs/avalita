@@ -26,7 +26,7 @@
                 <router-link
                   class="body-2"
                   text
-                  :to="{ name: 'p', params: { username: subItem.professor.username }}"
+                  :to="{ name: 'professor', params: { username: subItem.professor.username }}"
                 >
                   {{subItem.professor.name}}
                 </router-link>
