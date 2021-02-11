@@ -23,13 +23,13 @@
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <router-link
+                <span
                   class="body-2"
                   text
                   :to="{ name: 'professor', params: { username: subItem.professor.username }}"
                 >
                   {{subItem.professor.name}}
-                </router-link>
+                </span>
                 <course-ratings :item="subItem" />
               </v-expansion-panel-content>
             </v-expansion-panel>

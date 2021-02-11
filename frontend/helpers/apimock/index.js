@@ -33,5 +33,36 @@ export default {
   },
   list_items () {
     return mockasync(items)
+  },
+  vote (classId, col, value, studentUsername) {
+    // todo: tem que mudar na db o valor do rating
+
+    let sum = 0
+    let count = 0
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i]
+      if (item.class_id === classId) {
+        const v = item.ratings[col]
+        if (v) {
+          sum += v
+          count++
+        }
+      }
+    }
+    const score_formatter = (n) => {
+      return new Intl.NumberFormat('pt-Br',
+        {maximumFractionDigits: 2, minimumFractionDigits: 2}).format(parseFloat(n))
+    }
+    const votes_formatter = (n) => {
+      return new Intl.NumberFormat('pt-Br').format(parseInt(n))
+    }
+    let score = count > 0 ? score_formatter(sum / count) : '--'
+    score += ' (' + votes_formatter(count) + ' votos)'
+    return mockasync({rating: value, score})
+  },
+  load_vote (classId, col, studentUsername) {
+    const value = 3
+    const score = '2.34 (3 votos)'
+    return mockasync({rating: value, score})
   }
 }
