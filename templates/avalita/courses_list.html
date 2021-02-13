@@ -5,11 +5,12 @@
 {% block content %}
 {% if user.is_authenticated %}
 {% if user.student %}
+<p>You are a student! </p>
 <h2>Courses</h2>
 {% if courses %} <!-- courses -->
 <ul>
     {% for course in courses %}
-    <li><a href="/avalita/{{ course.id }}/">{{ course.title }}</a></li>
+    <li><a href="/avalita/{{ course.id }}/">{{course.code}}: {{ course.title }}</a></li>
     {% endfor %}
 </ul>
 {% else %} <!-- courses -->
@@ -17,6 +18,16 @@
 {% endif %} <!-- courses -->
 {% elif user.professor %} <!-- hasattr -->
 <p>You are a professor! </p>
+<h2>Courses</h2>
+{% if courses %} <!-- courses -->
+<ul>
+    {% for course in courses %}
+    <li><a href="/avalita/{{ course.id }}/">{{course.code}}: {{ course.title }}</a></li>
+    {% endfor %}
+</ul>
+{% else %} <!-- courses -->
+<p>You have not given any course!</p>
+{% endif %} <!-- courses -->
 {% else %} <!-- hasattr -->
 <p>You are not a student nor a professor! </p>
 {% endif %} <!-- hasattr -->
