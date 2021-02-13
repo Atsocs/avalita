@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% if user.student %}
+{% if courses %} <!-- courses -->
+<ul>
+    {% for course in courses %}
+    <li><a href="/avalita/{{ course.id }}/">{{ course.title }}</a></li>
+    {% endfor %}
+</ul>
+{% else %} <!-- courses -->
+<p>You have not taken any course!</p>
+{% endif %} <!-- courses -->
+{% elif user.professor %} <!-- hasattr -->
+<p>You are a professor! </p>
+{% else %} <!-- hasattr -->
+<p>You are not a student nor a professor! </p>
+{% endif %} <!-- hasattr -->
+{% else %} <!-- user.is_authenticated -->
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %} <!-- user.is_authenticated -->
+{% endblock %}
