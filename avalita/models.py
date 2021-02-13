@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 
 
@@ -53,13 +53,26 @@ class Course(models.Model):
 class Rating(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    general = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
-    coherence = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
-    understanding = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
-    easiness = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
-    course = models.ForeignKey(Course, related_name='reviews', on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, related_name='reviews', on_delete=models.CASCADE)
+    general = models.IntegerField(null=True, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    coherence = models.IntegerField(null=True, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    understanding = models.IntegerField(null=True, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    easiness = models.IntegerField(null=True, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self):
         ratings = [self.general, self.coherence, self.understanding, self.easiness]
-        return str(self.course) + ' | ' + str(self.student) + ' | ' + str(ratings)
+        # return str(self.course) + ' | ' + str(self.student) + ' | ' + str(ratings)
+        return str(ratings)
+
+
+@receiver(m2m_changed, sender=Course.students.through)
+def when_add_student(sender, instance, **kwargs):
+    action = kwargs.pop('action', None)
+    pk_set = kwargs.pop('pk_set', None)
+    if action == "post_add":
+        for pk in pk_set:
+            s = Student.objects.get(pk=pk)
+            Rating.objects.create(course=instance, student=s)
+        x = 1  # create rating
+        pass

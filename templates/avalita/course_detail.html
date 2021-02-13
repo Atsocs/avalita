@@ -1,0 +1,39 @@
+<h1>{{ course.title }}</h1>
+<h2>Professors</h2>
+<ul>
+    {% for professor in course.professors.all %}
+    <li>{{ professor }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Students</h2>
+<ul>
+    {% for student in course.students.all %}
+    <li>{{ student }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Your Ratings</h2>
+<form action="{% url 'vote' rating.id %}" method="post">
+    {% csrf_token %}
+    <label>General:</label>
+    <input type="number" name="general" min="1" max="5" value="{{ rating.general }}"><br>
+
+    <label>Coherence:</label>
+    <input type="number" name="coherence" min="1" max="5" value="{{ rating.coherence }}"><br>
+
+    <label>Understanding:</label>
+    <input type="number" name="understanding" min="1" max="5" value="{{ rating.understanding }}"><br>
+
+    <label>Easiness:</label>
+    <input type="number" name="easiness" min="1" max="5" value="{{ rating.easiness }}"><br>
+
+    <input type="submit" value="Vote">
+</form>
+
+<!--<label>General:</label>-->
+<!--<input type="number" name="general" min="1" max="5" value="{{ rating.general }}">-->
+<!--<p>General: {{ rating.general }}</p>-->
+<!--<p>Coherence: {{ rating.coherence }}</p>-->
+<!--<p>Understanding: {{ rating.understanding }}</p>-->
+<!--<p>Easiness: {{ rating.easiness }}</p>-->
