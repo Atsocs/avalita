@@ -11,15 +11,17 @@ from avalita.models import Course, Rating
 
 def course_list(request):
     user = request.user
-    if hasattr(user, 'student'):
-        courses = Course.objects.filter(students__user__username=user.username)
-    elif hasattr(user, 'professor'):
-        courses = Course.objects.filter(professors__user__username=user.username)
+    is_student = hasattr(user, 'student')
+    is_professor = hasattr(user, 'professor')
+    if is_student or is_professor:
+        if is_student:
+            courses = Course.objects.filter(students__user__username=user.username)
+        elif is_professor:
+            courses = Course.objects.filter(professors__user__username=user.username)
+        context = {'courses': courses, }
+    else:
+        context = {}
     template = loader.get_template('avalita/courses_list.html')
-
-    context = {
-        'courses': courses,
-    }
     return HttpResponse(template.render(context, request))
 
 
@@ -78,3 +80,9 @@ def add_course(request):
         form = AddCourseForm()
 
     return render(request, 'avalita/add_course.html', {'form': form})
+
+
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    course.delete()
+    return HttpResponseRedirect(reverse('course_list'))

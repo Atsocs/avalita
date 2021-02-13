@@ -4,7 +4,6 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-Hi {{ user.username }}!
 <p><a href="{% url 'course_list' %}">avalita</a></p>
 <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}

@@ -6,8 +6,6 @@
 <h1>{{ course.code }}: {{course.title}}</h1>
 {% if user.is_authenticated %}
 {% if user.student %}
-<p>You are a student! </p>
-
 <h2>Your Ratings</h2>
 <form action="{% url 'vote' rating.id %}" method="post">
     {% csrf_token %}
@@ -27,7 +25,7 @@
 </form>
 
 {% elif user.professor %} <!-- hasattr -->
-<p>You are a professor! </p>
+<p><a href="{% url 'delete_course' course.id %}">Delete this course</a></p>
 {% else %} <!-- hasattr -->
 <p>You are not a student nor a professor! </p>
 {% endif %} <!-- hasattr -->
