@@ -1,0 +1,25 @@
+{% extends 'avalita/base.html' %}
+
+{% block title %}INDEX{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% if user.student %}
+<h2>Courses</h2>
+{% if courses %} <!-- courses -->
+<ul>
+    {% for course in courses %}
+    <li><a href="/avalita/{{ course.id }}/">{{course.code}}: {{ course.title }}</a></li>
+    {% endfor %}
+</ul>
+{% else %} <!-- courses -->
+<p>You have not taken any course!</p>
+{% endif %} <!-- courses -->
+{% endif %} <!-- hasattr -->
+<p><a href="{% url 'index' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %} <!-- user.is_authenticated -->
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %} <!-- user.is_authenticated -->
+{% endblock %}

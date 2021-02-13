@@ -1,0 +1,24 @@
+{% extends 'avalita/base.html' %}
+
+{% block title %}{{ course.code }}{% endblock %}
+
+{% block content %}
+<h1>{{ course.code }}: {{course.title}}</h1>
+<h2>Delete this Course</h2>
+<p><a href="{% url 'delete_course' course.id %}">Delete this course</a></p>
+
+<h2>Professors</h2>
+<ul>
+    {% for professor in course.professors.all %}
+    <li>{{ professor }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Students</h2>
+<ul>
+    {% for student in course.students.all %}
+    <li>{{ student }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

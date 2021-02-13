@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'avalita/base.html' %}
 
 {% block title %}Add Course{% endblock %}
 
@@ -9,5 +9,4 @@
     {{ form.as_p }}
     <button type="submit">Add</button>
 </form>
-<p><a href="{% url 'home' %}">Home</a></p>
 {% endblock %}

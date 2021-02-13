@@ -9,20 +9,27 @@ from avalita.forms import AddCourseForm
 from avalita.models import Course, Rating
 
 
-def course_list(request):
+def index(request):
     user = request.user
-    is_student = hasattr(user, 'student')
-    is_professor = hasattr(user, 'professor')
-    if is_student or is_professor:
-        if is_student:
-            courses = Course.objects.filter(students__user__username=user.username)
-        elif is_professor:
-            courses = Course.objects.filter(professors__user__username=user.username)
-        context = {'courses': courses, }
+    if user.is_authenticated:
+        is_student = hasattr(user, 'student')
+        is_professor = hasattr(user, 'professor')
+        if is_student or is_professor:
+            if is_student:
+                courses = Course.objects.filter(students__user__username=user.username)
+                template = loader.get_template('avalita/student/index.html')
+            elif is_professor:
+                courses = Course.objects.filter(professors__user__username=user.username)
+                template = loader.get_template('avalita/professor/index.html')
+            context = {'courses': courses, }
+        else:
+            template = loader.get_template('avalita/index.html')
+            context = {}
+        return HttpResponse(template.render(context, request))
     else:
+        template = loader.get_template('avalita/non_authenticated.html')
         context = {}
-    template = loader.get_template('avalita/courses_list.html')
-    return HttpResponse(template.render(context, request))
+        return HttpResponse(template.render(context, request))
 
 
 def course_detail(request, course_id):
@@ -36,8 +43,8 @@ def course_detail(request, course_id):
             rating = Rating.objects.get(course__pk=course_id, student__pk=request.user.student.pk)
         except Rating.DoesNotExist:
             raise Http404("Rating does not exist. Have you taken " + str(course.code) + '?')
-        return render(request, 'avalita/course_detail.html', {'course': course, 'rating': rating})
-    return render(request, 'avalita/course_detail.html', {'course': course})
+        return render(request, 'avalita/student/course_detail.html', {'course': course, 'rating': rating})
+    return render(request, 'avalita/professor/course_detail.html', {'course': course})
 
 
 def vote(request, rating_id):
@@ -51,7 +58,7 @@ def vote(request, rating_id):
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
-    return HttpResponseRedirect(reverse('course_list'))
+    return HttpResponseRedirect(reverse('index'))
 
 
 def add_course(request):
@@ -73,16 +80,16 @@ def add_course(request):
             # process the data in form.cleaned_data as required
             # professor.course_set.create(period=form., code='MPG-03', title='Desenho Técnico'
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('course_list'))
+            return HttpResponseRedirect(reverse('index'))
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = AddCourseForm()
 
-    return render(request, 'avalita/add_course.html', {'form': form})
+    return render(request, 'avalita/professor/add_course.html', {'form': form})
 
 
 def delete_course(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     course.delete()
-    return HttpResponseRedirect(reverse('course_list'))
+    return HttpResponseRedirect(reverse('index'))

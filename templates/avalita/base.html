@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Avalita{% endblock %}</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+{% if user.get_full_name %}
+<p>Hi {{user.get_full_name}}!</p>
+{% else %}
+<p>Hi {{user.username}}!</p>
+{% endif %}
+{% if user.student %}
+<p>You're a student!</p>
+{% elif user.professor %}
+<p>You're a professor!</p>
+{% endif %}
+{% endif %}
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<p><a href="{% url 'index' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+</body>
+</html>
