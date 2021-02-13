@@ -37,10 +37,10 @@ def when_init(sender, instance, created, **kwargs):
 
 
 class Course(models.Model):
-    period = models.CharField(max_length=6)
-    code = models.CharField(max_length=6)
+    period = models.CharField(max_length=6, help_text='Example: "2021.1"')
+    code = models.CharField(max_length=6, help_text='Example: "MAT-12"')
+    title = models.CharField(max_length=140, help_text='Example: "Cálculo I"')
     professors = models.ManyToManyField(Professor)
-    title = models.CharField(max_length=140)
     students = models.ManyToManyField(Student)
 
     class Meta:

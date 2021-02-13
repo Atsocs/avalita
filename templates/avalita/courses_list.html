@@ -28,6 +28,7 @@
 {% else %} <!-- courses -->
 <p>You have not given any course!</p>
 {% endif %} <!-- courses -->
+<p><a href="{% url 'add_course' %}">Add Course</a></p>
 {% else %} <!-- hasattr -->
 <p>You are not a student nor a professor! </p>
 {% endif %} <!-- hasattr -->

@@ -5,6 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 # from avalita.forms import RatingForm
+from avalita.forms import AddCourseForm
 from avalita.models import Course, Rating
 
 
@@ -49,3 +50,31 @@ def vote(request, rating_id):
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
     return HttpResponseRedirect(reverse('course_list'))
+
+
+def add_course(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = AddCourseForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            data = form.cleaned_data
+            assert (hasattr(request.user, 'professor'))
+            professor = request.user.professor
+            new_course = professor.course_set.create(
+                period=data['period'],
+                code=data['code'],
+                title=data['title'])
+            new_course.students.set(data['students'])
+            new_course.save()
+            # process the data in form.cleaned_data as required
+            # professor.course_set.create(period=form., code='MPG-03', title='Desenho Técnico'
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('course_list'))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = AddCourseForm()
+
+    return render(request, 'avalita/add_course.html', {'form': form})
