@@ -17,10 +17,12 @@
 <p>You're a professor!</p>
 {% endif %}
 {% endif %}
+<hr>
 <main>
     {% block content %}
     {% endblock %}
 </main>
+<hr>
 <p><a href="{% url 'index' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Log Out</a></p>
 </body>

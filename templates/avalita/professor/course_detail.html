@@ -4,8 +4,31 @@
 
 {% block content %}
 <h1>{{ course.code }}: {{course.title}}</h1>
-<h2>Delete this Course</h2>
-<p><a href="{% url 'delete_course' course.id %}">Delete this course</a></p>
+
+<h2>Score</h2>
+<table>
+    <tr>
+        <th></th>
+        <th scope="col">General</th>
+        <th scope="col">Coherence</th>
+        <th scope="col">Understanding</th>
+        <th scope="col">Easiness</th>
+    </tr>
+    <tr>
+        <th scope="row">score</th>
+        <td>{{ score.0.0 }}</td>
+        <td>{{ score.1.0 }}</td>
+        <td>{{ score.2.0 }}</td>
+        <td>{{ score.3.0 }}</td>
+    </tr>
+    <tr>
+        <th scope="row">votes</th>
+        <td>{{ score.0.1 }}</td>
+        <td>{{ score.1.1 }}</td>
+        <td>{{ score.2.1 }}</td>
+        <td>{{ score.3.1 }}</td>
+    </tr>
+</table>
 
 <h2>Professors</h2>
 <ul>
@@ -21,4 +44,12 @@
     {% endfor %}
 </ul>
 
+<h2><a style="color:red" href="{% url 'delete_course' course.id %}">Delete this course</a></h2>
+
+<style>
+    td {
+        text-align:center;
+        width:100px;
+    }
+</style>
 {% endblock %}

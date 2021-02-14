@@ -36,17 +36,17 @@ def course_detail(request, course_id):
     course = None
     try:
         course = Course.objects.get(pk=course_id)
+        score = get_score(course)
     except Course.DoesNotExist:
         raise Http404("Course does not exist.")
     if hasattr(request.user, 'student'):
         try:
             rating = Rating.objects.get(course__pk=course_id, student__pk=request.user.student.pk)
-            score = get_score(course)
         except Rating.DoesNotExist:
             raise Http404("Rating does not exist. Have you taken " + str(course.code) + '?')
         return render(request, 'avalita/student/course_detail.html',
                       {'course': course, 'rating': rating, 'score': score})
-    return render(request, 'avalita/professor/course_detail.html', {'course': course})
+    return render(request, 'avalita/professor/course_detail.html', {'course': course, 'score': score})
 
 
 def vote(request, rating_id):
