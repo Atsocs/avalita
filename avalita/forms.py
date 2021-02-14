@@ -6,7 +6,7 @@ from avalita.models import Course, Student
 class AddCourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ('period', 'code', 'title', 'students')
+        fields = ('period', 'code', 'title', 'professors', 'students')
 
 
 class SignUpForm(forms.ModelForm):

@@ -48,7 +48,7 @@ class Course(models.Model):
     code = models.CharField(max_length=6, help_text='Example: "MAT-12"')
     title = models.CharField(max_length=140, help_text='Example: "Cálculo I"')
     professors = models.ManyToManyField(Professor)
-    students = models.ManyToManyField(Student)
+    students = models.ManyToManyField(Student, blank=True)
 
     class Meta:
         ordering = ['period', 'code']
