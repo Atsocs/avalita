@@ -116,5 +116,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'avalita.suporte@gmail.com'
+EMAIL_HOST_PASSWORD = 'tonylampada'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+

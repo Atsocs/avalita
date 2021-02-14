@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
@@ -104,3 +105,13 @@ def edit_course(request, course_id):
         form = CourseForm(instance=course)
 
     return render(request, 'avalita/professor/edit_course.html', {'form': form})
+
+
+def send_email():
+    return send_mail(
+        'That’s your subject',
+        'That’s your message body',
+        'avalita.suporte@gmail.com',
+        ['atsocs.cc@gmail.com'],
+        fail_silently=False,
+    )
