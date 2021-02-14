@@ -7,3 +7,9 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ('period', 'code', 'title', 'students')
+
+
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ('period', 'code', 'title', 'students')

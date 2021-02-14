@@ -6,15 +6,18 @@ from avalita.models import allowed_emails
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+    first_name = forms.CharField(max_length=30, help_text='Required. 30 characters or fewer.')
+    last_name = forms.CharField(max_length=30, help_text='Required. 30 characters or fewer.')
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
     def clean_email(self):
-        data = self.cleaned_data['email']
-        if not any([data.endswith(e) for e in allowed_emails]):
+        email = self.cleaned_data['email']
+        registered_emails = [u.email for u in User.objects.all()]
+        if email in registered_emails:
+            raise forms.ValidationError("A user with that email address already exists")
+        if not any([email.endswith(e) for e in allowed_emails]):
             raise forms.ValidationError("Must be a @ga.ita.br or @gp.ita.br address")
-        return data
+        return email
 
     class Meta:
         model = User
