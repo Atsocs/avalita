@@ -12,6 +12,6 @@
     <li><a href="{% url 'add_course' %}">Add Course</a></li>
 </ul>
 {% else %} <!-- courses -->
-<p>You have not given any course!</p>
+<p>You have not given any course! <a href="{% url 'add_course' %}">Add Course</a></p>
 {% endif %} <!-- courses -->
 {% endblock %}
