@@ -7,7 +7,7 @@
 {% if courses %} <!-- courses -->
 <ul>
     {% for course in courses %}
-    <li><a href="/avalita/{{ course.id }}/">{{course.code}}: {{ course.title }}</a></li>
+    <li><a href="/avalita/{{ course.id }}/">{{course.period}} {{course.code}}: {{ course.title }}</a></li>
     {% endfor %}
 </ul>
 <!--TODO: allow student to add course-->

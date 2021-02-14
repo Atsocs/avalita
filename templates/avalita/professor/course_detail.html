@@ -1,9 +1,9 @@
 {% extends 'avalita/base.html' %}
 
-{% block title %}{{ course.code }}{% endblock %}
+{% block title %}{{ course.code }} {{course.period}}{% endblock %}
 
 {% block content %}
-<h1>{{ course.code }}: {{course.title}}</h1>
+<h1>{{ course.code }}: {{course.title}} {{course.period}}</h1>
 
 <h2>Score</h2>
 <table>
