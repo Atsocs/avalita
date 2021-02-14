@@ -71,7 +71,6 @@ class Rating(models.Model):
         return self.general, self.coherence, self.understanding, self.easiness
 
     def __str__(self):
-        # return str(self.course) + ' | ' + str(self.student) + ' | ' + str(ratings)
         return str(self.get_ratings())
 
 
@@ -90,5 +89,3 @@ def when_add_student(sender, instance, **kwargs):
         for pk in pk_set:
             s = Student.objects.get(pk=pk)
             Rating.objects.create(course=instance, student=s)
-        x = 1  # create rating
-        pass

@@ -1,10 +1,8 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
-from django.urls import reverse, reverse_lazy
-from django.views import generic
+from django.urls import reverse
 
-# from avalita.forms import RatingForm
 from avalita.forms import AddCourseForm
 from avalita.models import Course, Rating, get_score
 
@@ -33,7 +31,6 @@ def index(request):
 
 
 def course_detail(request, course_id):
-    course = None
     try:
         course = Course.objects.get(pk=course_id)
         score = get_score(course)
@@ -64,11 +61,8 @@ def vote(request, rating_id):
 
 
 def add_course(request):
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
         form = AddCourseForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             data = form.cleaned_data
             assert (hasattr(request.user, 'professor'))
@@ -79,12 +73,8 @@ def add_course(request):
                 title=data['title'])
             new_course.students.set(data['students'])
             new_course.save()
-            # process the data in form.cleaned_data as required
-            # professor.course_set.create(period=form., code='MPG-03', title='Desenho Técnico'
-            # redirect to a new URL:
             return HttpResponseRedirect(reverse('index'))
 
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = AddCourseForm()
 
