@@ -1,0 +1,12 @@
+{% extends 'avalita/base.html' %}
+
+{% block title %}Manage Courses{% endblock %}
+
+{% block content %}
+<h2>Manage Courses</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

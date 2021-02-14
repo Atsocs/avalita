@@ -9,9 +9,9 @@
     {% for course in courses %}
     <li><a href="/avalita/{{ course.id }}/">{{course.period}} {{course.code}}: {{ course.title }}</a></li>
     {% endfor %}
+    <li><a href="{% url 'student_manages_courses' %}">Manage Courses</a></li>
 </ul>
-<!--TODO: allow student to add course-->
 {% else %} <!-- courses -->
-<p>You have not taken any course!</p>
+<p>You have not taken any course! <a href="{% url 'student_manages_courses' %}">Manage Courses</a></p>
 {% endif %} <!-- courses -->
 {% endblock %}

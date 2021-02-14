@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
-from avalita.forms import CourseForm
+from avalita.forms import AddCourseForm, StudentManagesCoursesForm
 from avalita.models import Course, Rating, get_score
 
 
@@ -60,7 +60,7 @@ def vote(request, rating_id):
 
 def add_course(request):
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = AddCourseForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             assert (hasattr(request.user, 'professor'))
@@ -74,7 +74,7 @@ def add_course(request):
             return HttpResponseRedirect(reverse('index'))
 
     else:
-        form = CourseForm()
+        form = AddCourseForm()
 
     return render(request, 'avalita/professor/add_course.html', {'form': form})
 
@@ -88,7 +88,7 @@ def delete_course(request, course_id):
 def edit_course(request, course_id):
     course = Course.objects.get(pk=course_id)
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = AddCourseForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             assert (hasattr(request.user, 'professor'))
@@ -102,16 +102,25 @@ def edit_course(request, course_id):
             return HttpResponseRedirect(reverse('course_detail', args=[course_id]))
 
     else:
-        form = CourseForm(instance=course)
+        form = AddCourseForm(instance=course)
 
     return render(request, 'avalita/professor/edit_course.html', {'form': form})
 
 
-def send_email():
-    return send_mail(
-        'That’s your subject',
-        'That’s your message body',
-        'avalita.suporte@gmail.com',
-        ['atsocs.cc@gmail.com'],
-        fail_silently=False,
-    )
+def student_manages_courses(request):
+    student = request.user.student
+    if request.method == 'POST':
+        form = StudentManagesCoursesForm(request.POST)
+        if form.is_valid():
+            old_courses = student.course_set.all()
+            new_courses = form.cleaned_data['courses']
+            removed_courses = [c for c in old_courses if c not in new_courses]
+            added_courses = [c for c in new_courses if c not in old_courses]
+            #  notify professors of removed_courses
+            #  ask to professors of new_courses
+            return HttpResponseRedirect(reverse('index'))
+
+    else:
+        form = StudentManagesCoursesForm(instance=student)
+
+    return render(request, 'avalita/student/student_manages_courses.html', {'form': form})
