@@ -116,8 +116,17 @@ def student_manages_courses(request):
             new_courses = form.cleaned_data['courses']
             removed_courses = [c for c in old_courses if c not in new_courses]
             added_courses = [c for c in new_courses if c not in old_courses]
-            #  notify professors of removed_courses
-            #  ask to professors of new_courses
+
+            for c in removed_courses:
+                #  TODO: notify professor
+                r = c.rating_set.get(student=student)
+                r.delete()
+                c.students.remove(student)
+
+            for c in added_courses:
+                #  TODO: ask to professors of new_courses
+                c.students.add(student)
+
             return HttpResponseRedirect(reverse('index'))
 
     else:
