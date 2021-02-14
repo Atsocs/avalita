@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
-from avalita.forms import AddCourseForm
+from avalita.forms import CourseForm
 from avalita.models import Course, Rating, get_score
 
 
@@ -54,15 +54,12 @@ def vote(request, rating_id):
         if value:
             setattr(rating, category, int(value))
     rating.save()
-    # Always return an HttpResponseRedirect after successfully dealing
-    # with POST data. This prevents data from being posted twice if a
-    # user hits the Back button.
     return HttpResponseRedirect(reverse('course_detail', args=[rating.course.pk]))
 
 
 def add_course(request):
     if request.method == 'POST':
-        form = AddCourseForm(request.POST)
+        form = CourseForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             assert (hasattr(request.user, 'professor'))
@@ -76,7 +73,7 @@ def add_course(request):
             return HttpResponseRedirect(reverse('index'))
 
     else:
-        form = AddCourseForm()
+        form = CourseForm()
 
     return render(request, 'avalita/professor/add_course.html', {'form': form})
 
@@ -85,3 +82,25 @@ def delete_course(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     course.delete()
     return HttpResponseRedirect(reverse('index'))
+
+
+def edit_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            assert (hasattr(request.user, 'professor'))
+            professor = request.user.professor
+            assert (professor in course.professors.all())
+            course.period = data['period']
+            course.code = data['code']
+            course.title = data['title']
+            course.students.set(data['students'])
+            course.save()
+            return HttpResponseRedirect(reverse('course_detail', args=[course_id]))
+
+    else:
+        form = CourseForm(instance=course)
+
+    return render(request, 'avalita/professor/edit_course.html', {'form': form})

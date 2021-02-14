@@ -44,6 +44,8 @@
     {% endfor %}
 </ul>
 
+<h2><a style="color:red" href="{% url 'edit_course' course.id %}">Edit Course Info</a></h2>
+
 <h2><a style="color:red" href="{% url 'delete_course' course.id %}">Delete this course</a></h2>
 
 <style>
