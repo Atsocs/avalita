@@ -6,7 +6,7 @@ from django.views import generic
 
 # from avalita.forms import RatingForm
 from avalita.forms import AddCourseForm
-from avalita.models import Course, Rating
+from avalita.models import Course, Rating, get_score
 
 
 def index(request):
@@ -41,9 +41,11 @@ def course_detail(request, course_id):
     if hasattr(request.user, 'student'):
         try:
             rating = Rating.objects.get(course__pk=course_id, student__pk=request.user.student.pk)
+            score = get_score(course)
         except Rating.DoesNotExist:
             raise Http404("Rating does not exist. Have you taken " + str(course.code) + '?')
-        return render(request, 'avalita/student/course_detail.html', {'course': course, 'rating': rating})
+        return render(request, 'avalita/student/course_detail.html',
+                      {'course': course, 'rating': rating, 'score': score})
     return render(request, 'avalita/professor/course_detail.html', {'course': course})
 
 
@@ -58,7 +60,7 @@ def vote(request, rating_id):
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('course_detail', args=[rating.course.pk]))
 
 
 def add_course(request):

@@ -1,8 +1,15 @@
+from statistics import mean
+
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
+
+
+def none_mean(x):
+    x = [e for e in x if e is not None]
+    return mean(x) if x else None
 
 
 class Student(models.Model):
@@ -60,10 +67,19 @@ class Rating(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
+    def get_ratings(self):
+        return self.general, self.coherence, self.understanding, self.easiness
+
     def __str__(self):
-        ratings = [self.general, self.coherence, self.understanding, self.easiness]
         # return str(self.course) + ' | ' + str(self.student) + ' | ' + str(ratings)
-        return str(ratings)
+        return str(self.get_ratings())
+
+
+def get_score(course):
+    results = tuple(zip(*[r.get_ratings() for r in course.rating_set.all()]))
+    scores = tuple(none_mean(res) for res in results)
+    counts = tuple(len(tuple(x for x in res if x is not None)) for res in results)
+    return tuple(zip(scores, counts))
 
 
 @receiver(m2m_changed, sender=Course.students.through)

@@ -4,36 +4,48 @@
 
 {% block content %}
 <h1>{{ course.code }}: {{course.title}}</h1>
+
+<h2>Professors</h2>
+<ul>
+    {% for professor in course.professors.all %}
+    <li>{{ professor }}</li>
+    {% endfor %}
+</ul>
+
+
 <h2>Your Ratings</h2>
 <form action="{% url 'vote' rating.id %}" method="post">
     {% csrf_token %}
-    <label>General:</label>
-    <input type="number" name="general" min="1" max="5" value="{{ rating.general }}"><br>
+    <label class="right" for="general">General:</label>
+    <input type="number" name="general" id="general" min="1" max="5" value="{{ rating.general }}">
+    <label for="general">mean {{ score.0.0 }} from {{ score.0.1 }} votes</label>
+    <br>
 
-    <label>Coherence:</label>
-    <input type="number" name="coherence" min="1" max="5" value="{{ rating.coherence }}"><br>
+    <label class="right" for="coherence">Coherence:</label>
+    <input type="number" name="coherence" id="coherence" min="1" max="5" value="{{ rating.coherence }}">
+    <label for="coherence">mean {{ score.1.0 }} from {{ score.1.1 }} votes</label>
+    <br>
 
-    <label>Understanding:</label>
-    <input type="number" name="understanding" min="1" max="5" value="{{ rating.understanding }}"><br>
+    <label class="right" for="understanding">Understanding:</label>
+    <input type="number" name="understanding" id="understanding" min="1" max="5" value="{{ rating.understanding }}">
+    <label for="understanding">mean {{ score.2.0 }} from {{ score.2.1 }} votes</label>
+    <br>
 
-    <label>Easiness:</label>
-    <input type="number" name="easiness" min="1" max="5" value="{{ rating.easiness }}"><br>
+    <label class="right" for="easiness">Easiness:</label>
+    <input type="number" name="easiness" id="easiness" min="1" max="5" value="{{ rating.easiness }}">
+    <label for="easiness">mean {{ score.3.0 }} from {{ score.3.1 }} votes</label>
+    <br>
 
     <input type="submit" value="Vote">
+    <style>
+        label.right {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+    </style>
+
 </form>
-
-<!--<h2>Professors</h2>-->
-<!--<ul>-->
-<!--    {% for professor in course.professors.all %}-->
-<!--    <li>{{ professor }}</li>-->
-<!--    {% endfor %}-->
-<!--</ul>-->
-
-<!--<h2>Students</h2>-->
-<!--<ul>-->
-<!--    {% for student in course.students.all %}-->
-<!--    <li>{{ student }}</li>-->
-<!--    {% endfor %}-->
-<!--</ul>-->
-
 {% endblock %}
+
+
