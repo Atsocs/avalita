@@ -35,12 +35,13 @@ class Professor(models.Model):
 @receiver(post_save, sender=get_user_model())
 def when_init(sender, instance, created, **kwargs):
     if created:
+        if instance.username == 'admin':
+            return
         user_type = next(allowed_emails[e]
                          for e in allowed_emails
                          if instance.email.endswith(e))
         profile = eval(user_type).objects.create(user=instance)
         profile.save()
-        pass
 
 
 class Course(models.Model):
