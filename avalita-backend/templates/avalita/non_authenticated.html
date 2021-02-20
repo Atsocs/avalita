@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Avalita{% endblock %}
+
+{% block content %}
+<p>You are not signed in</p>
+<strong>Menu:</strong>
+<ul>
+    <li><a href="{% url 'account_login' %}">Sign In</a></li>
+    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+</ul>
+{% endblock %}
+
+
+

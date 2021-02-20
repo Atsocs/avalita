@@ -1,0 +1,17 @@
+{% extends 'avalita/base.html' %}
+
+{% block title %}INDEX{% endblock %}
+
+{% block content %}
+<h2>Courses</h2>
+{% if courses %} <!-- courses -->
+<ul>
+    {% for course in courses %}
+    <li><a href="/avalita/{{ course.id }}/">{{course.period}} {{course.code}}: {{ course.title }}</a></li>
+    {% endfor %}
+    <li><a href="{% url 'add_course' %}">Add Course</a></li>
+</ul>
+{% else %} <!-- courses -->
+<p>You have not given any course! <a href="{% url 'add_course' %}">Add Course</a></p>
+{% endif %} <!-- courses -->
+{% endblock %}
